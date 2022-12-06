@@ -1,4 +1,5 @@
-# cicd-jenkins-serverless
+# CICD docs
+
 ### This repository to build ci/cd pipeline for aws lambda project by jenkins.
 ### We will setup Docker on Ubuntu as server and create pipeline with Jenkins cluster (master and worker) on Docker. With Jenkins cluster, Docker will spin up agent container to run pipeline, and agent container will be terminated after pipeline done. 
 
@@ -39,6 +40,7 @@
     > groups
 
 ref: https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04
+ref: https://www.geeksforgeeks.org/how-to-setup-jenkins-in-docker-container/ (AWS EC2)
 
 # 2. Configure a Docker Host With Remote API
 
@@ -66,6 +68,15 @@ ref: https://devopscube.com/docker-containers-as-build-slaves-jenkins/
     > docker run --name jenkins-master --restart=on-failure -d -v jenkins_home:/var/jenkins_home -p 8080:8080 -p 50000:50000 jenkins/jenkins:lts
 ref: https://www.jenkins.io/doc/book/installing/docker/
 
+    If server run on EC2 instance, edit inbound rule to access jenkins from internet:
+    > Type: Custom TCP
+    > Port range: 8080
+    > Source: Any where IPv4
+
+    > Type: Custom TCP
+    > Port range: 32768 - 60999
+    > Source: My IP
+
     Set up Jenkins and add Docker plugin:
     https://www.bogotobogo.com/DevOps/Docker/Docker-Jenkins-Master-Slave-Agent-ssh.php
 
@@ -89,7 +100,7 @@ Access Jenkins on browser: http://localhost:8080/
     Enter value:
         Docker Host URI:
         > tcp://docker_host_dns:2376 (docker_host_dns is the ip address of Ubuntu server which running Docker)
-        > Example: tcp://192.168.1.11:2376
+        > Example: tcp://192.168.1.11:2376 (If ubuntu server is EC2 instance, ip is the private IP address of instance)
     
         Make sure **Enabled** is selected
 
@@ -174,7 +185,7 @@ ref: https://www.coachdevops.com/2022/08/jenkins-build-agent-setup-using-docker.
 
         Repositories:
             Repository URL: (Add your repository url)
-            > https://gitlab.com/abcd.git
+            > https://gitlab.com/bnpl-hdbank/api/cicd-docs.git
 
             Credentials: (Add git user in credentials)
             > Gitlab user to access repositories

@@ -22,7 +22,10 @@ RUN apt-get update && \
 
 # Install serverless framework
 RUN npm install -g serverless@2.72.3 && \
-    npm install -g serverless-hooks-plugin
+    npm install -g serverless-hooks-plugin 
+
+# Install serverless plugin 
+RUN npm install -g @agiledigital/serverless-sns-sqs-lambda
 
 # Install AWS CLI
 RUN apt-get install unzip
