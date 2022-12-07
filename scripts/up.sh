@@ -3,7 +3,7 @@
 set -e
 
 ENV="${1:-dev}";
-if [[ $# > 0 ]]; then shift; fi
+if [ $# > 0 ]; then shift; fi
 
 ARGS="$@"
 UPFILE="./up.${ENV}.json"
